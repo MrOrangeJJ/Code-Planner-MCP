@@ -1,4 +1,218 @@
-# 计划管理系统 | [English](#planning-management-system)
+
+
+# Planning Management System
+
+A simple planning and task management system that helps organize and track project progress.
+
+## Features
+
+- Create and manage plans
+- Add and manage tasks within plans
+- Set task dependencies and order
+- Update task status and progress
+- Add comments and notes to tasks
+- Automatically generate plans and tasks from text
+- View next tasks to be executed
+
+## Tech Stack
+
+- Backend: FastAPI (Python)
+- Frontend: Vanilla JavaScript, HTML, and CSS
+- Data Storage: JSON files
+- MCP Tools: TypeScript + Model Context Protocol (MCP)
+
+## Installation and Setup
+
+### Prerequisites
+
+- Node.js 14+
+- Python 3.8+
+- An OpenAI API key (for AI agents)
+
+### Environment Setup
+
+1. Copy the example environment file:
+
+```bash
+cp example.env .env
+```
+
+2. Edit the .env file to set your environment variables:
+   - Update `MODEL_API_KEY` with your OpenAI API key
+   - Adjust ports and other settings as needed
+
+### Backend
+
+1. Install Python dependencies:
+
+```bash
+cd backend
+pip install -r requirements.txt
+```
+
+2. Start the backend server:
+
+```bash
+cd backend
+uvicorn app.main:app --reload --port 8000
+```
+
+The backend API will run at http://localhost:8000/.
+
+### Frontend
+
+1. Start the frontend proxy server:
+
+```bash
+python server.py
+```
+
+The frontend application will run at http://localhost:3000/.
+
+### MCP Tools
+
+1. Install dependencies:
+
+```bash
+cd mcp
+npm install
+```
+
+2. Build the tools:
+
+```bash
+cd mcp
+npm run build
+```
+
+3. Run the MCP service:
+
+```bash
+cd mcp
+API_BASE_URL=http://localhost:8000 node dist/planner_tools.js
+```
+
+MCP tools will run in the background, interacting with AI assistants via the Cursor IDE.
+
+## Planner Tools MCP Features
+
+Planner Tools MCP integrates the following features, specifically designed for AI assistants in the Cursor IDE:
+
+### Core Tools
+
+1. **Create Plan (create_plan)**
+   - Create structured plans from text
+   - Automatically parse task descriptions and dependencies
+   - Automatically set as the currently tracked plan
+
+2. **Get Current Plan Tasks (get_current_plan_tasks)**
+   - View all tasks in the current plan
+   - Includes detailed information such as status, description, dependencies, and comments
+
+3. **Get Next Tasks (get_next_tasks)**
+   - Intelligently analyze and recommend which tasks should be executed next
+   - Sort based on task status and dependencies
+
+4. **Add Comment (add_comment)**
+   - Add various types of comments (notes, questions, suggestions, issues) to specific tasks
+   - Help record thoughts and decision processes related to tasks
+
+5. **Update Task Status (update_task_status)**
+   - Update the progress status of tasks
+   - Support multiple statuses: Pending, Working, Pending For Review, Complete, Need Fixed
+
+6. **Remove Comment (remove_comment)**
+   - Delete completed or outdated comments
+   - Keep task history clean and organized
+
+### Use Cases
+
+MCP tools are particularly suitable for the following scenarios:
+- Managing development plans for large software projects
+- Complex task sequences that need long-term tracking
+- Projects that require remembering multiple steps and dependencies
+- Scenarios where AI assistants need to understand and track project context
+
+## API Documentation
+
+After starting the backend server, you can access the API documentation at:
+
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
+## Project Structure
+
+```
+/
+├── backend/                # Backend code
+│   ├── app/
+│   │   ├── api/            # API routes
+│   │   ├── models/         # Data models
+│   │   ├── services/       # Business logic
+│   │   ├── agents/         # AI agents
+│   │   ├── utils/          # Utility functions
+│   │   ├── config.py       # Configuration
+│   │   └── main.py         # Application entry
+│   └── requirements.txt    # Dependencies
+│
+├── public/                 # Frontend static files
+│   ├── css/                # Style files
+│   ├── js/                 # JavaScript files
+│   └── index.html          # Main HTML page
+│
+├── mcp/                    # MCP tools
+│   ├── src/                # Source code
+│   ├── dist/               # Compiled code
+│   └── package.json        # Dependency configuration
+│
+├── .env                    # Environment variables
+├── example.env             # Example environment configuration
+│
+└── server.py               # Frontend proxy server
+```
+
+## Usage Flow
+
+1. Create a plan or automatically generate one from text
+2. Add tasks to the plan
+3. Set task dependencies and order
+4. Update task status
+5. Add comments and notes
+6. Use the "Next Tasks" feature to see what to do next
+
+## MCP Integration Examples
+
+Through Cursor IDE, AI assistants can interact with Planner Tools as follows:
+
+```
+// Create a new plan
+mcp_planner_tools_create_plan({
+  name: "Website Development Project",
+  text: "Task 1: Design Database Schema\nDesign user, content, and permission models.\n\nTask 2: Implement API Endpoints\nDevelop RESTful API endpoints.\nDepends on Task 1."
+})
+
+// Get all tasks in the current plan
+mcp_planner_tools_get_current_plan_tasks({
+  random_string: "check"
+})
+
+// Get tasks that should be executed next
+mcp_planner_tools_get_next_tasks({
+  random_string: "next"
+})
+```
+
+## Developer
+
+This project was developed by Dream of Yang.
+
+## License
+
+MIT 
+
+---
+
+# 计划管理系统
 
 一个简单的计划和任务管理系统，帮助组织和跟踪项目进度。
 
@@ -208,214 +422,3 @@ mcp_planner_tools_get_next_tasks({
 
 MIT
 
----
-
-# Planning Management System | [中文](#计划管理系统-)
-
-A simple planning and task management system that helps organize and track project progress.
-
-## Features
-
-- Create and manage plans
-- Add and manage tasks within plans
-- Set task dependencies and order
-- Update task status and progress
-- Add comments and notes to tasks
-- Automatically generate plans and tasks from text
-- View next tasks to be executed
-
-## Tech Stack
-
-- Backend: FastAPI (Python)
-- Frontend: Vanilla JavaScript, HTML, and CSS
-- Data Storage: JSON files
-- MCP Tools: TypeScript + Model Context Protocol (MCP)
-
-## Installation and Setup
-
-### Prerequisites
-
-- Node.js 14+
-- Python 3.8+
-- An OpenAI API key (for AI agents)
-
-### Environment Setup
-
-1. Copy the example environment file:
-
-```bash
-cp example.env .env
-```
-
-2. Edit the .env file to set your environment variables:
-   - Update `MODEL_API_KEY` with your OpenAI API key
-   - Adjust ports and other settings as needed
-
-### Backend
-
-1. Install Python dependencies:
-
-```bash
-cd backend
-pip install -r requirements.txt
-```
-
-2. Start the backend server:
-
-```bash
-cd backend
-uvicorn app.main:app --reload --port 8000
-```
-
-The backend API will run at http://localhost:8000/.
-
-### Frontend
-
-1. Start the frontend proxy server:
-
-```bash
-python server.py
-```
-
-The frontend application will run at http://localhost:3000/.
-
-### MCP Tools
-
-1. Install dependencies:
-
-```bash
-cd mcp
-npm install
-```
-
-2. Build the tools:
-
-```bash
-cd mcp
-npm run build
-```
-
-3. Run the MCP service:
-
-```bash
-cd mcp
-API_BASE_URL=http://localhost:8000 node dist/planner_tools.js
-```
-
-MCP tools will run in the background, interacting with AI assistants via the Cursor IDE.
-
-## Planner Tools MCP Features
-
-Planner Tools MCP integrates the following features, specifically designed for AI assistants in the Cursor IDE:
-
-### Core Tools
-
-1. **Create Plan (create_plan)**
-   - Create structured plans from text
-   - Automatically parse task descriptions and dependencies
-   - Automatically set as the currently tracked plan
-
-2. **Get Current Plan Tasks (get_current_plan_tasks)**
-   - View all tasks in the current plan
-   - Includes detailed information such as status, description, dependencies, and comments
-
-3. **Get Next Tasks (get_next_tasks)**
-   - Intelligently analyze and recommend which tasks should be executed next
-   - Sort based on task status and dependencies
-
-4. **Add Comment (add_comment)**
-   - Add various types of comments (notes, questions, suggestions, issues) to specific tasks
-   - Help record thoughts and decision processes related to tasks
-
-5. **Update Task Status (update_task_status)**
-   - Update the progress status of tasks
-   - Support multiple statuses: Pending, Working, Pending For Review, Complete, Need Fixed
-
-6. **Remove Comment (remove_comment)**
-   - Delete completed or outdated comments
-   - Keep task history clean and organized
-
-### Use Cases
-
-MCP tools are particularly suitable for the following scenarios:
-- Managing development plans for large software projects
-- Complex task sequences that need long-term tracking
-- Projects that require remembering multiple steps and dependencies
-- Scenarios where AI assistants need to understand and track project context
-
-## API Documentation
-
-After starting the backend server, you can access the API documentation at:
-
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
-
-## Project Structure
-
-```
-/
-├── backend/                # Backend code
-│   ├── app/
-│   │   ├── api/            # API routes
-│   │   ├── models/         # Data models
-│   │   ├── services/       # Business logic
-│   │   ├── agents/         # AI agents
-│   │   ├── utils/          # Utility functions
-│   │   ├── config.py       # Configuration
-│   │   └── main.py         # Application entry
-│   └── requirements.txt    # Dependencies
-│
-├── public/                 # Frontend static files
-│   ├── css/                # Style files
-│   ├── js/                 # JavaScript files
-│   └── index.html          # Main HTML page
-│
-├── mcp/                    # MCP tools
-│   ├── src/                # Source code
-│   ├── dist/               # Compiled code
-│   └── package.json        # Dependency configuration
-│
-├── .env                    # Environment variables
-├── example.env             # Example environment configuration
-│
-└── server.py               # Frontend proxy server
-```
-
-## Usage Flow
-
-1. Create a plan or automatically generate one from text
-2. Add tasks to the plan
-3. Set task dependencies and order
-4. Update task status
-5. Add comments and notes
-6. Use the "Next Tasks" feature to see what to do next
-
-## MCP Integration Examples
-
-Through Cursor IDE, AI assistants can interact with Planner Tools as follows:
-
-```
-// Create a new plan
-mcp_planner_tools_create_plan({
-  name: "Website Development Project",
-  text: "Task 1: Design Database Schema\nDesign user, content, and permission models.\n\nTask 2: Implement API Endpoints\nDevelop RESTful API endpoints.\nDepends on Task 1."
-})
-
-// Get all tasks in the current plan
-mcp_planner_tools_get_current_plan_tasks({
-  random_string: "check"
-})
-
-// Get tasks that should be executed next
-mcp_planner_tools_get_next_tasks({
-  random_string: "next"
-})
-```
-
-## Developer
-
-This project was developed by Dream of Yang.
-
-## License
-
-MIT 
