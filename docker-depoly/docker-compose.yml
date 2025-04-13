@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  code-dock-app:
+    image: ${DOCKER_IMAGE:-himerman/code-planner:latest} # Default image if not set in .env
+    container_name: code-planner
+    restart: unless-stopped
+    ports:
+      # Host Port : Container Port
+      - "${BACKEND_PORT:-20089}:${BACKEND_PORT:-20089}"
+      - "${WEB_PORT:-20090}:${WEB_PORT:-20090}"
+    # Load environment variables from .env file in the same directory
+    env_file:
+      - ./.env

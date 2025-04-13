@@ -1,9 +1,6 @@
 #!/bin/bash
 # 重启脚本 - 停止已有进程并启动Cursor Planner API服务和前端静态服务器
 
-# 加载环境变量
-source .env
-
 # 获取后端端口号，默认为8000
 BACKEND_PORT=${BACKEND_PORT:-8000}
 FRONTEND_PORT=${WEB_PORT:-3000}
@@ -59,7 +56,7 @@ else
 fi
 
 # 启动uvicorn并在后台运行 (错误输出也打印到终端)
-python -m uvicorn app.main:app --reload --port $BACKEND_PORT &
+python -m uvicorn app.main:app --reload --host 0.0.0.0 --port $BACKEND_PORT &
 API_PID=$!
 echo "API服务器进程ID: $API_PID"
 if [ -f "venv/bin/activate" ]; then # 仅当虚拟环境存在时才停用
