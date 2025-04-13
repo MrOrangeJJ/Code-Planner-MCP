@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计划管理系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="/css/variables.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/buttons.css">
+    <link rel="stylesheet" href="/css/cards.css">
+    <link rel="stylesheet" href="/css/modals.css">
+    <link rel="stylesheet" href="/css/forms.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <h1><i class="fas fa-tasks"></i> 计划管理系统</h1>
+            <div class="header-actions">
+                <button id="refresh-plans" class="btn btn-light" title="刷新计划列表">
+                    <i class="fas fa-sync-alt"></i> 刷新
+                </button>
+                <button id="create-plan-button" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> 新建计划
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="plans-section">
+            <div class="section-header">
+                <h2><i class="fas fa-clipboard-list"></i> 我的计划</h2>
+                <span id="api-url" class="small-text">API地址: 加载中...</span>
+            </div>
+
+            <div id="plans-loading" class="loading-indicator">
+                <div class="spinner"></div>
+                <p>加载计划中...</p>
+            </div>
+
+            <div id="no-plans" class="empty-state">
+                <i class="fas fa-clipboard fa-3x"></i>
+                <h3>还没有计划</h3>
+                <p>创建您的第一个计划开始工作吧！</p>
+                <button id="upload-first-plan" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> 创建计划
+                </button>
+            </div>
+
+            <div id="manage-status" class="status-container"></div>
+
+            <div id="plans-grid" class="plans-grid">
+                <!-- 计划卡片将在这里动态添加 -->
+            </div>
+        </section>
+
+        <section class="create-from-text-section">
+            <h2><i class="fas fa-magic"></i> 创建新计划</h2>
+            
+            <div class="card">
+                <form id="create-from-text-form" class="form">
+                    <div class="form-group">
+                        <label for="text-plan-name">计划名称 (可选)</label>
+                        <input type="text" id="text-plan-name" name="name" placeholder="请输入计划名称" class="custom-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="plan-text">计划文本</label>
+                        <textarea id="plan-text" name="text" placeholder="输入您想要转换成计划的文本描述" rows="6" required class="custom-textarea"></textarea>
+                    </div>
+                    
+                    <div id="text-create-status" class="status-container"></div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-magic"></i> 从文本创建
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- 计划详情模态框 -->
+    <div id="plan-detail-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="plan-detail-title">计划详情</h2>
+                <button id="plan-detail-modal-close" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="plan-detail-loading" class="loading-indicator">
+                    <div class="spinner"></div>
+                    <p>加载中...</p>
+                </div>
+                <div id="plan-detail-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加任务模态框 -->
+    <div id="add-task-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="add-task-title">添加任务</h2>
+                <button id="add-task-modal-close" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="add-task-form" class="form">
+                    <input type="hidden" id="add-task-plan-id" name="plan_id">
+                    <div class="form-group">
+                        <label for="task-title">任务标题</label>
+                        <input type="text" id="task-title" name="title" placeholder="请输入任务标题" required class="custom-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="task-description">任务描述</label>
+                        <textarea id="task-description" name="description" placeholder="请描述任务内容" rows="3" class="custom-textarea"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-order">顺序</label>
+                        <input type="number" id="task-order" name="order" placeholder="任务顺序" min="1" class="custom-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="task-dependencies">依赖任务</label>
+                        <select id="task-dependencies" name="dependencies" multiple class="custom-select">
+                            <!-- 依赖任务选项会动态添加 -->
+                        </select>
+                    </div>
+                    <div id="add-task-status" class="status-container"></div>
+                    
+                    <!-- 任务状态更新区域 -->
+                    <div class="form-group task-status-section">
+                        <label>任务状态</label>
+                        <div class="status-buttons">
+                            <button type="button" class="btn btn-sm btn-info update-status-btn" data-status="Pending">
+                                <i class="fas fa-clock"></i> 待处理
+                            </button>
+                            <button type="button" class="btn btn-sm btn-warning update-status-btn" data-status="Working">
+                                <i class="fas fa-spinner"></i> 进行中
+                            </button>
+                            <button type="button" class="btn btn-sm btn-primary update-status-btn" data-status="Pending For Review">
+                                <i class="fas fa-search"></i> 待审核
+                            </button>
+                            <button type="button" class="btn btn-sm btn-success update-status-btn" data-status="Complete">
+                                <i class="fas fa-check"></i> 已完成
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger update-status-btn" data-status="Need Fixed">
+                                <i class="fas fa-exclamation-triangle"></i> 需修复
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 评论区域 -->
+                    <div class="form-group comments-section">
+                        <label>评论</label>
+                        <div id="comments-container"></div>
+                        <button type="button" class="btn btn-sm btn-primary add-comment-btn">
+                            <i class="fas fa-plus"></i> 添加评论
+                        </button>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary save-task-btn">
+                            <i class="fas fa-save"></i> 保存任务
+                        </button>
+                        <button type="button" class="btn btn-danger delete-task-btn">
+                            <i class="fas fa-trash-alt"></i> 删除任务
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 下一步任务模态框 -->
+    <div id="next-tasks-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>下一步任务</h2>
+                <button id="next-tasks-modal-close" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="next-tasks-loading" class="loading-indicator">
+                    <div class="spinner"></div>
+                    <p>加载中...</p>
+                </div>
+                <div id="next-tasks-content"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2023 计划管理系统 | 版本 1.0.0</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript 文件 -->
+    <script src="/js/ui-helpers.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/js/plan-manager.js"></script>
+    <script src="/js/task-manager.js"></script>
+    <script src="/js/main.js"></script>
+</body>
+</html> 

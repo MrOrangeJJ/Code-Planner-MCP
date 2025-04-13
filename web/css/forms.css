@@ -1,0 +1,378 @@
+/* 表单样式 */
+.form {
+    width: 100%;
+    padding: 20px 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb), 0.2);
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-base);
+    line-height: 1.5;
+    color: var(--color-gray-700);
+    background-color: white;
+    background-clip: padding-box;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--border-radius);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input.form-control,
+select.form-control {
+    height: 40px;
+}
+
+.form-control:focus {
+    color: var(--color-gray-700);
+    background-color: white;
+    border-color: var(--color-primary-light);
+    outline: 0;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25);
+}
+
+.form-control::placeholder {
+    color: var(--color-gray-400);
+    opacity: 1;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: var(--color-gray-100);
+    opacity: 1;
+}
+
+textarea.form-control {
+    height: auto;
+    resize: vertical;
+    min-height: 80px;
+}
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    padding-right: 2.5rem;
+}
+
+/* 复选框和单选框 */
+.form-check {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--spacing-2);
+}
+
+.form-check-input {
+    margin-right: var(--spacing-2);
+    width: 1rem;
+    height: 1rem;
+}
+
+/* 表单验证 */
+.form-control.is-invalid {
+    border-color: var(--color-danger);
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3E%3Ccircle cx='6' cy='6' r='4.5'/%3E%3Cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3E%3Ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-control.is-invalid:focus {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: var(--font-size-xs);
+    color: var(--color-danger);
+}
+
+.was-validated .form-control:invalid ~ .invalid-feedback,
+.form-control.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+/* 表单操作区域 */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+/* 表单行内布局 */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: calc(var(--spacing-3) * -1);
+    margin-left: calc(var(--spacing-3) * -1);
+}
+
+.form-row > .form-group {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding-right: var(--spacing-3);
+    padding-left: var(--spacing-3);
+}
+
+/* 自定义文件上传 */
+.file-upload-wrapper {
+    position: relative;
+    margin-bottom: var(--spacing-4);
+}
+
+.file-upload-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+}
+
+.file-upload-button {
+    display: inline-block;
+    padding: var(--spacing-2) var(--spacing-4);
+    background-color: var(--color-primary);
+    color: white;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color var(--transition-fast);
+}
+
+.file-upload-button:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.file-name-display {
+    display: inline-block;
+    margin-left: var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+/* 多选选择器 */
+select[multiple] {
+    height: auto;
+    padding: var(--spacing-2);
+    min-height: 120px;
+    background-image: none;
+}
+
+select[multiple] option {
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 2px;
+}
+
+select[multiple] option:checked {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .form-row > .form-group {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+    }
+}
+
+/* 自定义输入框样式 */
+.custom-input {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.custom-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+    outline: none;
+}
+
+.custom-input::placeholder {
+    color: var(--text-light);
+    opacity: 0.7;
+}
+
+/* 自定义文本域样式 */
+.custom-textarea {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 100px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.custom-textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+    outline: none;
+}
+
+.custom-textarea::placeholder {
+    color: var(--text-light);
+    opacity: 0.7;
+}
+
+/* 自定义选择框样式 */
+.custom-select {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    color: var(--text-color);
+    font-size: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.custom-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2);
+    outline: none;
+}
+
+.custom-select option {
+    padding: 0.5rem;
+    margin: 0.25rem 0;
+}
+
+.custom-select option:checked {
+    background-color: rgba(var(--primary-rgb), 0.1);
+}
+
+/* 评论表单 */
+.comment-form {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: var(--bg-light);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.comment-form textarea {
+    width: 100%;
+    min-height: 80px;
+    resize: vertical;
+}
+
+.comment-form .form-actions {
+    margin-top: 1rem;
+}
+
+/* 状态按钮组 */
+.status-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.status-buttons .btn {
+    min-width: 100px;
+    justify-content: center;
+}
+
+/* 评论容器 */
+#comments-container {
+    margin: 1rem 0;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.comment-form textarea.custom-textarea {
+    min-height: 100px;
+    margin-bottom: 1rem;
+}
+
+.comment-type-select {
+    margin-bottom: 1rem;
+}
+
+/* 任务编辑表单 */
+.task-status-section {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.comments-section {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.no-comments-message {
+    color: var(--text-light);
+    font-style: italic;
+    padding: 1rem;
+    text-align: center;
+    background-color: var(--bg-light);
+    border-radius: 0.5rem;
+    border: 1px dashed var(--border-color);
+} 

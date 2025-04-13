@@ -1,0 +1,182 @@
+/* 模态框样式 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    padding: var(--spacing-6);
+    overflow-y: auto;
+    transition: opacity var(--transition-normal);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal.open {
+    display: block;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-xl);
+    margin: 0 auto;
+    max-width: 800px;
+    position: relative;
+    animation: modal-appear 0.3s ease-out;
+}
+
+@keyframes modal-appear {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-header {
+    padding: var(--spacing-4) var(--spacing-6);
+    border-bottom: 1px solid var(--color-gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: var(--font-size-xl);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    color: var(--color-gray-500);
+    transition: color var(--transition-fast);
+}
+
+.modal-close:hover {
+    color: var(--color-danger);
+}
+
+.modal-body {
+    padding: var(--spacing-6);
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: var(--spacing-4) var(--spacing-6);
+    border-top: 1px solid var(--color-gray-200);
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-3);
+}
+
+/* 模态框大小变体 */
+.modal-sm .modal-content {
+    max-width: 500px;
+}
+
+.modal-lg .modal-content {
+    max-width: 1000px;
+}
+
+.modal-xl .modal-content {
+    max-width: 1200px;
+}
+
+/* 计划详情模态框 */
+.plan-detail-list {
+    margin-top: var(--spacing-4);
+}
+
+.task-detail-list {
+    margin-top: var(--spacing-4);
+}
+
+/* 评论列表 */
+.comment-list {
+    margin-top: var(--spacing-4);
+}
+
+.comment-item {
+    padding: var(--spacing-3);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-3);
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-2);
+}
+
+.comment-type {
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-1);
+}
+
+.comment-type.note {
+    color: var(--color-info);
+}
+
+.comment-type.question {
+    color: var(--color-warning);
+}
+
+.comment-type.suggestion {
+    color: var(--color-primary);
+}
+
+.comment-type.issue {
+    color: var(--color-danger);
+}
+
+.comment-date {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.comment-content {
+    color: var(--color-gray-700);
+}
+
+.comment-actions {
+    margin-top: var(--spacing-2);
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .modal {
+        padding: var(--spacing-3);
+    }
+    
+    .modal-content {
+        max-width: 100%;
+    }
+    
+    .modal-body {
+        padding: var(--spacing-4);
+    }
+    
+    .modal-header,
+    .modal-footer {
+        padding: var(--spacing-3) var(--spacing-4);
+    }
+} 

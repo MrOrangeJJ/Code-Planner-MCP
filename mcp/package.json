@@ -1,0 +1,24 @@
+{
+  "name": "planner-tools-mcp",
+  "version": "1.0.0",
+  "description": "任务计划管理MCP工具",
+  "main": "dist/planner_tools.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/planner_tools.js",
+    "dev": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.9.0",
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.30",
+    "typescript": "^5.4.2"
+  }
+}

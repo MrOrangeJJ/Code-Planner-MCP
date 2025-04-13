@@ -1,0 +1,222 @@
+/* 页面布局 */
+.container {
+    width: 100%;
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-6);
+}
+
+/* 页眉 */
+.main-header {
+    background-color: var(--color-primary);
+    color: white;
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-6);
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header h1 {
+    font-size: var(--font-size-2xl);
+    margin: 0;
+}
+
+.header-actions {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+/* 主内容区 */
+main {
+    flex: 1;
+    padding-bottom: var(--spacing-12);
+}
+
+section {
+    margin-bottom: var(--spacing-8);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-6);
+}
+
+.section-header h2 {
+    margin-bottom: 0;
+}
+
+/* 计划卡片网格 */
+.plans-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-6);
+    justify-content: start;
+}
+
+/* 页脚 */
+.main-footer {
+    background-color: var(--color-gray-800);
+    color: var(--color-gray-300);
+    padding: var(--spacing-6) 0;
+    text-align: center;
+    margin-top: auto;
+}
+
+/* 卡片布局 */
+.card {
+    background-color: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    padding: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+}
+
+.plan-card {
+    background-color: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+    opacity: 0;
+    transform: translateY(20px);
+    display: flex;
+    flex-direction: column;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.plan-card-header {
+    padding: var(--spacing-4);
+    border-bottom: 1px solid var(--color-gray-200);
+    background-color: var(--color-gray-50);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.plan-name {
+    font-weight: 600;
+    color: var(--color-gray-900);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.plan-status {
+    display: flex;
+    align-items: center;
+}
+
+.plan-card-body {
+    padding: var(--spacing-4);
+    flex: 1;
+}
+
+.plan-info {
+    margin-bottom: var(--spacing-4);
+}
+
+.plan-info-item {
+    margin-bottom: var(--spacing-2);
+    display: flex;
+    align-items: flex-start;
+}
+
+.plan-description {
+    color: var(--color-gray-600);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-4);
+    max-height: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.plan-actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-2);
+    padding: var(--spacing-4);
+    border-top: 1px solid var(--color-gray-200);
+}
+
+.plan-stats {
+    display: flex;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-value {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-primary);
+}
+
+.stat-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+/* 任务列表 */
+.task-list {
+    margin-top: var(--spacing-4);
+}
+
+.task-item {
+    padding: var(--spacing-3);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-3);
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-title {
+    font-weight: 500;
+}
+
+.task-actions {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .plans-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .main-header .container {
+        flex-direction: column;
+        gap: var(--spacing-2);
+        padding: var(--spacing-2) 0;
+    }
+    
+    .main-header {
+        height: auto;
+        padding: var(--spacing-4) 0;
+    }
+    
+    .plan-actions {
+        grid-template-columns: 1fr;
+    }
+} 

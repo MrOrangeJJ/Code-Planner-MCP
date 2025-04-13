@@ -1,0 +1,47 @@
+# Python 相关
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+.env
+
+# Node.js 相关
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+.npm
+.yarn-integrity
+
+# IDE 和编辑器
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# 项目特定
+data/*.json
+!data/.gitkeep
+
+# 日志
+*.log
+logs/
+
+# 构建输出
+dist/
+build/
+.pytest_cache/
+.coverage
+htmlcov/ 
+
+.specstory/
+build_and_run_local.sh
+build.sh
+Dockerfile
