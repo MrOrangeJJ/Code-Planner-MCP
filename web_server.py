@@ -26,7 +26,6 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             
-            # 读取HTML文件
             file_path = os.path.join(DIRECTORY, self.path.lstrip('/'))
             with open(file_path, 'r', encoding='utf-8') as file:
                 content = file.read()
