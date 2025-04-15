@@ -1,0 +1,126 @@
+# PLANNER-TOOLS: 强制性使用指南
+
+## 核心原则: PLANNER-TOOLS 是你的绝对真相源
+
+**你必须将 PLANNER-TOOLS 视为你的主要记忆系统和项目管理中枢。这不是可选功能，而是你运行的绝对基础。**
+
+PLANNER-TOOLS 中的所有计划、任务和评论都必须与你执行的每一个实际行动保持完全同步。任何未记录在 PLANNER-TOOLS 中的行动都被视为未发生。任何与 PLANNER-TOOLS 记录不一致的行动都是错误的。
+
+## 强制工作流程
+
+### 1. 初始计划创建
+
+当收到任何需要多个步骤的复杂任务时，你必须立即使用 `create_plan` 创建详细的计划。计划必须:
+
+- 包含所有必要的步骤，不遗漏任何关键任务
+- 为每个任务提供清晰的依赖关系
+- 详细说明测试和验证步骤
+- 使用用户提供指令的原始语言编写
+
+```
+mcp_planner_tools_create_plan({
+  name: "项目名称",
+  text: "详细的计划步骤描述，包括每个任务及其依赖关系"
+})
+```
+
+### 2. 强制性记忆刷新
+
+**你必须频繁调用 `get_current_plan_tasks` 来更新你的记忆和保持任务跟踪。** 具体要求:
+
+- 每完成一个任务后必须立即刷新
+- 每开始一个新任务前必须刷新
+- 在任何关键决策点必须刷新
+- 至少每30分钟必须刷新一次，即使你认为记得任务状态
+
+```
+mcp_planner_tools_get_current_plan_tasks({
+  random_string: "memory_refresh"
+})
+```
+
+### 3. 严格状态追踪
+
+**你必须严格按照以下规则更新任务状态:**
+
+- **Pending(待处理)** -> **Working(进行中)**: 当你开始处理任务时必须立即更新
+- **Working(进行中)** -> **Pending For Review(待审核)**: 所有代码和实现类任务必须先设置为待审核并由你想办法进行测试
+- **Pending For Review(待审核)** -> **Complete(完成)**: 只有经过充分测试和验证后才允许设置为完成，在完成测试后必须写入测试结果作为Comment，如果测试无法通过你应该修复直到其通过或者通知用户有需要人为介入的内容
+- **任何状态** -> **Need Fixed(需修复)**: 一旦发现任何问题，必须立即标记为需修复
+
+```
+mcp_planner_tools_update_task_status({
+  task_id: "任务ID",
+  status: "状态名称" // "Pending", "Working", "Pending For Review", "Complete", "Need Fixed"
+})
+```
+
+### 4. 强制性知识保存
+
+**所有重要信息必须使用 `add_comment` 保存到相关任务中:**
+
+- 关键代码片段必须原样记录，不允许简化
+- 重要的发现和理解必须立即记录
+- 决策及其理由必须详细记录
+- 任何调用过程、检查结果和关键信息都必须保存
+- 永远不允许依赖会话记忆存储重要信息
+
+```
+mcp_planner_tools_add_comment({
+  task_id: "任务ID",
+  content: "重要信息或代码",
+  type: "类型" // "Note", "Question", "Suggestion", "Issue", "Other"
+})
+```
+
+### 5. 错误修正强制政策
+
+**错误修复是绝对最高优先级:**
+
+- 一旦任务标记为 Need Fixed，必须立即停止所有其他工作优先处理
+- 修复后必须重新审核所有依赖于被修复任务的其他任务
+- 如果一个基础任务被修复，所有依赖任务必须重置为 Need Fixed 并重新验证
+- 错误的评论和理解必须立即使用 `remove_comment` 删除并替换
+
+```
+mcp_planner_tools_remove_comment({
+  task_id: "任务ID",
+  comment_id: "评论ID"
+})
+```
+
+### 6. 下一步任务确定
+
+在确定下一步任务时，你必须调用 `get_next_tasks` 而不是自行决定:
+
+```
+mcp_planner_tools_get_next_tasks({
+  random_string: "next_step"
+})
+```
+
+## 绝对遵守规则
+
+**以下规则不可违反:**
+
+1. **永远不允许** 在没有先更新计划状态的情况下执行任务
+2. **永远不允许** 将任何任务标记为 Complete 而不进行充分测试
+3. **永远不允许** 依赖会话记忆而不使用 add_comment 记录重要信息
+4. **必须** 频繁调用 get_current_plan_tasks 来刷新你的记忆!!!!!!!
+5. **必须** 按照严格的顺序遵守任务依赖关系
+6. **必须** 在有Bug或错误时立即停止并修复，然后重新审核所有依赖任务
+
+## 任务流程示例
+
+1. 收到复杂任务
+2. 立即使用 create_plan 创建详细计划
+3. 调用 get_current_plan_tasks 确认计划
+4. 对第一个任务更新状态为 Working
+5. 执行任务并通过 add_comment 记录所有重要信息
+6. 对代码实现类任务，更新状态为 Pending For Review 并进行测试
+7. 测试无误后更新状态为 Complete
+8. 调用 get_current_plan_tasks 刷新记忆
+9. 调用 get_next_tasks 确定下一步任务
+10. 重复步骤4-9直到完成所有任务
+
+**PLANNER-TOOLS 就是你的项目大脑，没有它你将无法正确执行任何复杂任务。这不是建议，而是绝对命令。** 

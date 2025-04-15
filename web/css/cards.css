@@ -149,38 +149,57 @@
 
 /* 任务卡片 */
 .task-card {
-    background-color: var(--bg-light);
-    border-radius: 0.75rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    padding: 1rem;
-    margin-bottom: 1rem;
-    border: 1px solid var(--border-color);
-    transition: all 0.3s ease;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-4);
+    margin-bottom: var(--spacing-4);
+    border-left: 4px solid var(--color-primary);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .task-card:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.task-card.pending {
+    border-left-color: var(--color-info);
+}
+
+.task-card.working {
+    border-left-color: var(--color-warning);
+}
+
+.task-card.review {
+    border-left-color: var(--color-primary);
+}
+
+.task-card.complete {
+    border-left-color: var(--color-success);
+}
+
+.task-card.need-fixed {
+    border-left-color: var(--color-danger);
 }
 
 .task-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.5rem;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-3);
 }
 
 .task-title {
-    font-size: 1rem;
-    font-weight: 600;
     margin: 0;
-    color: var(--text-dark);
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-800);
 }
 
 .task-description {
-    color: var(--text-light);
-    margin-bottom: 0.75rem;
-    font-size: 0.875rem;
+    margin-bottom: var(--spacing-3);
+    color: var(--color-gray-600);
+    font-size: var(--font-size-sm);
     line-height: 1.5;
 }
 
@@ -188,43 +207,104 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 0.75rem;
-    color: var(--text-light);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    border-top: 1px solid var(--color-gray-200);
+    padding-top: var(--spacing-3);
+    margin-top: var(--spacing-3);
 }
 
 .task-actions {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--spacing-2);
+    margin-top: var(--spacing-2);
 }
 
-/* 任务状态变体 */
-.task-card.pending, .status-badge.pending {
-    background-color: rgba(var(--warning-rgb), 0.1);
-    color: var(--status-pending-color);
+/* 增强任务操作按钮的可见性 */
+.task-actions .btn {
+    padding: var(--spacing-2) var(--spacing-3);
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.task-card.working, .status-badge.working {
-    background-color: rgba(var(--primary-rgb), 0.1);
-    color: var(--status-working-color);
-    border-left: 3px solid var(--status-working-color);
+.task-actions .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
 }
 
-.task-card.review, .status-badge.review {
-    background-color: rgba(var(--info-rgb), 0.1);
-    color: var(--status-review-color);
-    border-left: 3px solid var(--status-review-color);
+.task-actions .btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
 }
 
-.task-card.complete, .status-badge.complete {
-    background-color: rgba(var(--secondary-rgb), 0.1);
-    color: var(--status-complete-color);
-    border-left: 3px solid var(--status-complete-color);
+.task-actions .btn-danger {
+    background-color: var(--color-danger);
+    border-color: var(--color-danger);
 }
 
-.task-card.need-fixed, .status-badge.need-fixed {
-    background-color: rgba(var(--danger-rgb), 0.1);
-    color: var(--status-need-fixed-color);
-    border-left: 3px solid var(--status-need-fixed-color);
+/* 增强计划的添加任务按钮 */
+.add-task-to-plan {
+    font-weight: 600;
+    padding: var(--spacing-2) var(--spacing-4);
+    box-shadow: var(--shadow-md);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.add-task-to-plan:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* 状态徽章样式 */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    color: white;
+}
+
+.status-badge i {
+    margin-right: var(--spacing-1);
+}
+
+.status-badge.pending {
+    background-color: var(--color-info);
+}
+
+.status-badge.working {
+    background-color: var(--color-warning);
+}
+
+.status-badge.review {
+    background-color: var(--color-primary);
+}
+
+.status-badge.complete {
+    background-color: var(--color-success);
+}
+
+.status-badge.need-fixed {
+    background-color: var(--color-danger);
+}
+
+/* 任务依赖标签 */
+.task-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-3);
+}
+
+.task-tag {
+    background-color: var(--color-gray-100);
+    color: var(--color-gray-700);
+    padding: 2px 8px;
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
 }
 
 /* 加载延迟动画 */
@@ -257,17 +337,6 @@
         opacity: 1;
         transform: translateY(0);
     }
-}
-
-/* 状态徽章 */
-.status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
-    font-size: 0.75rem;
-    font-weight: 600;
 }
 
 /* 状态筛选器 */

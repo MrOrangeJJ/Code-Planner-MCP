@@ -262,21 +262,29 @@ const PlanManager = (function() {
                     ? `<ul>${plan.notes.map(note => `<li>${UI.escapeHtml(note)}</li>`).join('')}</ul>` 
                     : '<p>没有笔记</p>'}
                 
-                <h3>任务列表 (${plan.tasks ? plan.tasks.length : 0}个任务)</h3>
-                ${renderTaskList(plan.tasks || [])}
-                
-                <div class="form-actions">
-                    <button class="btn btn-primary" id="add-task-to-plan" data-id="${plan.id}">
-                        <i class="fas fa-plus"></i> 添加任务
+                <div class="task-list-header">
+                    <h3>任务列表 (${plan.tasks ? plan.tasks.length : 0}个任务)</h3>
+                    <button class="btn btn-success btn-lg add-task-to-plan" data-id="${plan.id}">
+                        <i class="fas fa-plus"></i> 添加新任务
                     </button>
                 </div>
+                ${renderTaskList(plan.tasks || [])}
             </div>
         `;
         
         planDetailContent.innerHTML = detailHTML;
         
+        // 添加任务列表标题和添加按钮的样式
+        const taskListHeader = planDetailContent.querySelector('.task-list-header');
+        if (taskListHeader) {
+            taskListHeader.style.display = 'flex';
+            taskListHeader.style.justifyContent = 'space-between';
+            taskListHeader.style.alignItems = 'center';
+            taskListHeader.style.marginBottom = '1rem';
+        }
+        
         // 绑定添加任务按钮事件
-        const addTaskButton = document.getElementById('add-task-to-plan');
+        const addTaskButton = planDetailContent.querySelector('.add-task-to-plan');
         if (addTaskButton) {
             addTaskButton.addEventListener('click', () => {
                 if (typeof TaskManager !== 'undefined' && typeof TaskManager.openAddTaskModal === 'function') {
@@ -290,12 +298,38 @@ const PlanManager = (function() {
         
         // 绑定任务编辑按钮事件
         const editTaskButtons = planDetailContent.querySelectorAll('.edit-task-btn');
-        
         editTaskButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 const taskId = btn.dataset.id;
                 if (taskId) {
                     handleEditTask(plan.id, taskId);
+                }
+            });
+        });
+        
+        // 绑定任务删除按钮事件
+        const deleteTaskButtons = planDetailContent.querySelectorAll('.delete-task-btn');
+        deleteTaskButtons.forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const taskId = btn.dataset.id;
+                if (taskId && confirm('确定要删除此任务吗？此操作不可恢复！')) {
+                    try {
+                        const response = await fetch(`${API_BASE_URL}/plans/${plan.id}/tasks/${taskId}`, {
+                            method: 'DELETE'
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(`删除任务失败: ${response.status}`);
+                        }
+                        
+                        UI.showNotification('任务已成功删除', 'success');
+                        
+                        // 刷新计划详情
+                        showPlanDetail(plan.id);
+                    } catch (error) {
+                        console.error('删除任务出错:', error);
+                        UI.showNotification(`删除失败: ${error.message}`, 'error');
+                    }
                 }
             });
         });
@@ -394,8 +428,11 @@ const PlanManager = (function() {
                                 <span>评论: ${task.comments ? task.comments.length : 0}</span>
                             </div>
                             <div class="task-actions">
-                                <button class="btn btn-sm btn-primary edit-task-btn" data-id="${task.id}" title="编辑任务">
+                                <button class="btn btn-sm btn-primary edit-task-btn" data-id="${task.id}" title="查看/编辑任务">
                                     <i class="fas fa-edit"></i> 编辑
+                                </button>
+                                <button class="btn btn-sm btn-danger delete-task-btn" data-id="${task.id}" title="删除任务">
+                                    <i class="fas fa-trash-alt"></i> 删除
                                 </button>
                             </div>
                         </div>

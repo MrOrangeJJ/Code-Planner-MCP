@@ -1,0 +1,39 @@
+:root {
+    /* 建立CSS变量兼容层，解决变量命名不一致问题 */
+    
+    /* 主要颜色 */
+    --color-primary: var(--primary-color);
+    --color-primary-rgb: var(--primary-rgb);
+    --color-primary-dark: var(--primary-dark);
+    --color-primary-light: var(--primary-light);
+    
+    /* 次要颜色 */
+    --color-secondary: var(--secondary-color);
+    --color-secondary-rgb: var(--secondary-rgb);
+    --color-secondary-dark: var(--secondary-dark);
+    --color-secondary-light: var(--secondary-light);
+    
+    /* 危险颜色 */
+    --color-danger: var(--danger-color);
+    --color-danger-rgb: var(--danger-rgb);
+    --color-danger-dark: var(--danger-dark);
+    --color-danger-light: var(--danger-light);
+    
+    /* 警告颜色 */
+    --color-warning: var(--warning-color);
+    --color-warning-rgb: var(--warning-rgb);
+    --color-warning-dark: var(--warning-dark);
+    --color-warning-light: var(--warning-light);
+    
+    /* 信息颜色 */
+    --color-info: var(--info-color);
+    --color-info-rgb: var(--info-rgb);
+    --color-info-dark: var(--info-dark);
+    --color-info-light: var(--info-light);
+    
+    /* 成功颜色 */
+    --color-success: var(--secondary-color);
+    --color-success-rgb: var(--secondary-rgb);
+    --color-success-dark: var(--secondary-dark);
+    --color-success-light: var(--secondary-light);
+} 

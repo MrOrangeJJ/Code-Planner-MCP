@@ -1056,6 +1056,29 @@ const TaskManager = (function() {
         }
     }
     
+    // 打开添加任务模态窗口
+    function openAddTaskModal() {
+        currentMode = "add";
+        currentTaskId = null;
+        
+        // 设置模态窗口标题
+        document.getElementById('task-modal-title').textContent = '添加新任务';
+        
+        // 重置表单
+        if (addTaskForm) {
+            addTaskForm.reset();
+        }
+        
+        // 隐藏评论区域
+        if (commentContainer) {
+            commentContainer.style.display = 'none';
+        }
+        
+        // 显示模态窗口
+        taskModal.classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+    
     // 打开删除确认模态窗口
     function openDeleteConfirmModal() {
         deleteConfirmModal.classList.add('active');
